@@ -25,7 +25,11 @@
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.topView =imageView;
     [self.tableView insertSubview:self.topView atIndex:0];
-
+    
+    
+    UIUserNotificationSettings *settings =[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    [UIApplication sharedApplication].applicationIconBadgeNumber =10;
 //    [self.tableView addSubview:self.topView];
 }
 
