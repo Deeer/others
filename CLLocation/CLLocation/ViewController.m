@@ -10,6 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 @interface ViewController ()<CLLocationManagerDelegate>
 @property (nonatomic,strong)    CLLocationManager *mgr ;
+@property (strong, nonatomic) UIButton * btn;
 @end
 
 @implementation ViewController
@@ -23,7 +24,14 @@
     if ([[UIDevice currentDevice].systemVersion floatValue]>8.0) {
         [self.mgr requestAlwaysAuthorization];
     }
-    [self.mgr startUpdatingLocation];
+//    [self.mgr startUpdatingLocation];
+    [self.mgr startUpdatingHeading];
+    
+    self.btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+    self.btn.center=self.view.center;
+    self.btn.backgroundColor= [UIColor purpleColor];
+    [self.view addSubview:self.btn];
+    
 
 }
 #pragma mark -delegate
@@ -43,8 +51,15 @@
      */
     
     
-    CLLocation *location =[locations lastObject];
-    NSLog(@"%f-%f",location.coordinate.latitude,location.coordinate.longitude);
+//    CLLocation *location =[locations lastObject];
+//    NSLog(@"%f-%f",location.coordinate.latitude,location.coordinate.longitude);
+}
+-(void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
+{
+//    NSLog(@"%s",__func__);
+//    NSLog(@"%f",newHeading.magneticHeading);
+    self.btn.layer.cornerRadius = (50 - newHeading.magneticHeading/360*50);
+    
 }
 
 #pragma lazy
