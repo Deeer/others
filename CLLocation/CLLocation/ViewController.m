@@ -24,8 +24,14 @@
     if ([[UIDevice currentDevice].systemVersion floatValue]>8.0) {
         [self.mgr requestAlwaysAuthorization];
     }
+    
+    q
 //    [self.mgr startUpdatingLocation];
-    [self.mgr startUpdatingHeading];
+//    [self.mgr startUpdatingHeading];
+//    CLRegion 有两个子类是专门指定区域的，一个是指定蓝牙的范围，另一个是指定圆形的范围
+    CLLocationCoordinate2D center =CLLocationCoordinate2DMake(40, 116);
+    CLCircularRegion *circular =[[CLCircularRegion alloc]initWithCenter: center radius:500 identifier:@"de"];
+    [self.mgr startMonitoringForRegion:circular];
     
     self.btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     self.btn.center=self.view.center;
@@ -62,6 +68,14 @@
     
 }
 
+-(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
+{
+    NSLog(@"Enter!!");
+}
+-(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
+{
+    NSLog(@"Out!!");
+}
 #pragma lazy
 -(CLLocationManager *)mgr
 {
